@@ -1,6 +1,14 @@
+/**
+ * My Treehouse Projects
+ *
+ * Random Quote Generator - March 2016
+ *
+ */
+
 
 "use strict";
 
+// ARRAY OF QUOTE OBJECTS
 var quotes = [
 	{
 		"quote": "People will forget what you said.  People will forget what you did.  But people will remember how you made them feel.",
@@ -162,7 +170,7 @@ var playPauseBar = document.getElementsByClassName("playPauseBar");
 var quoteToggle = true;
 var quoteIndex;
 
-
+// HELPER FUNCTION TO PRINT QUOTE PROPERTY OR OMIT PRINTING QUOTE PROPERTY IF NON-EXISTENT 
 var handleIfEmpty = function(x, y) {
 	if (y == "" || y == null) {
 		x[0].innerHTML = "";
@@ -171,10 +179,14 @@ var handleIfEmpty = function(x, y) {
 	}
 };
 
+// event listener to respond to clicks on the page
+// when user clicks anywhere on the page, the "makeQuote" function is called
 document.getElementById('loadQuote').addEventListener("click", printQuote, false);
 
 function printQuote() {
 	
+	
+	// RANDOM RGB TO SET NEW COLOR WITH EACH NEW QUOTE
 	var r;
 	var g;
 	var b;
@@ -208,7 +220,7 @@ function printQuote() {
 		playPauseBar[i].style.background = rgb3;
 	}
 	
-	
+	// CONDITIONALLY SELECT INDEX OF QUOTES ARRAY SO FIRST SELECTION IS RANDOM AND EACH QUOTE IN THE ARRAY IS DISPLAYED BEFORE REPEATING  
 	if (quoteToggle) {
 		var quo = quotes[0];
 		quoteIndex = quotes.indexOf(quo);
@@ -221,13 +233,13 @@ function printQuote() {
 		}	
 	}
 	
-
+	// PRINT TO THE SCREEN
 	quote[0].innerHTML = quotes[quoteIndex].quote;
 	source[0].innerHTML = quotes[quoteIndex].source;
 	handleIfEmpty(citation, quotes[quoteIndex].citation);
 	handleIfEmpty(year, quotes[quoteIndex].year);
 	
-
+	// SET FONT SIZE DEPENDING ON LENGTH OF QUOTE
 	if (width > 749) {
 		if (quotes[quoteIndex].quote.length < 125) {
 			quote[0].style.fontSize = "4rem";
@@ -259,13 +271,13 @@ var bar3 = document.getElementsByClassName("bar3");
 var playPauseToggle = true;
 var quoteCycle;
 
-
+// HELPER FUNCTION TO HANDLE VENDOR PREFIXES ON TRANSFORM STYLE PROPERTRY 
 var handleTransform = function(what, howMuch) {
 	what.style.webkitTransform = "rotate(" + howMuch + "deg)";
 	what.style.transform = "rotate(" + howMuch + "deg)";
 };
 
-
+// PLAY/PAUSE BUTTON TO START AND STOP AUTO REFRESH QUOTE EVERY 30 SECONS
 playPause.addEventListener("click", playQuote, false);
 function playQuote(e) {
 	
@@ -275,16 +287,16 @@ function playQuote(e) {
 	var playPauseOrientation;
 	
 	if (playPauseToggle) {
-
+		// PREVENT LINK DEFAULT FUNCTION
 		e.preventDefault;
 		
-
+		// CHANGE QUOTE ONCE IMMEDIATELY SO THE BUTTON DOESN'T APPEAR TO BE BROKEN
 		printQuote();
 		
-
+		// NEW TOOL TIP
 		playPauseInstruction[0].innerHTML = "Pause auto refresh";
 		
-
+		// CHANGE QUOTE EVERY 30 SECONDS
 		quoteCycle = setInterval(printQuote, 30000);
 		
 		opac = 1;
@@ -292,7 +304,7 @@ function playQuote(e) {
 		bottomTurn = -30;
 		playPauseOrientation = 0;
 		
-
+		// ANIMATE TRANSITION BETWEEN BUTTON PLAY AND PAUSE STATE
 		var convertToPause = setInterval(function() {
 			opac -= .01;
 			topTurn -= .5;
@@ -314,13 +326,13 @@ function playQuote(e) {
 		
 		playPauseToggle = false;
 	} else if (!playPauseToggle) {
-
+		// PREVENT LINK DEFAULT FUNCTION
 		e.preventDefault;
 		
-
+		// STOP NEW QUOTE AUTO REFRESH
 		clearInterval(quoteCycle);
 		
-
+		// NEW TOOL TIP
 		playPauseInstruction[0].innerHTML = "Refresh quote every 30 sec";
 		
 		opac = 0;
@@ -328,7 +340,7 @@ function playQuote(e) {
 		bottomTurn = 0;
 		playPauseOrientation = 90;
 		
-
+		// ANIMATE TRANSITION BETWEEN BUTTON PLAY AND PAUSE STATE
 		var convertToPlay = setInterval(function() {
 			opac += .01;
 			topTurn += .5;
